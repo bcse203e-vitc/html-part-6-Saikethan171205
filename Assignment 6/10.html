@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <title>Dynamic Form Builder UI</title>
+    </head>
+    <body>
+            <h2>Dynamic Form Builder</h2>
+            <label for="inputType">Select Input Type:</label>
+            <select id="inputType">
+                <option value="text">Text</option>
+                <option value="email">Email</option>
+                <option value="password">Password</option>
+            </select>
+            <button id="addBtn">Add</button>
+            <form id="dynamicForm">
+                <div id="inputsContainer"></div>
+                <button type="submit">Submit</button>
+            </form>
+            <script>
+                const inputTypeSelect = document.getElementById('inputType');
+                const addBtn = document.getElementById('addBtn');
+                const inputsContainer = document.getElementById('inputsContainer');
+                const form = document.getElementById('dynamicForm');
+                const regexMap = {
+                text: /^[A-Za-z\s]+$/,
+                email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                password: /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/ // min 8 chars, 1 uppercase, 1 number
+                };
+                addBtn.addEventListener('click', () => {
+                const selectedType = inputTypeSelect.value;
+                const wrapper = document.createElement('div');
+                const input = document.createElement('input');
+                input.type = selectedType;
+                input.name = selectedType + 'Input[]';
+                input.placeholder = `Enter ${selectedType}`;
+                input.required = true;
+                const errorSpan = document.createElement('span');
+                errorSpan.style.color = 'red';
+                errorSpan.style.marginLeft = '10px';
+                input.addEventListener('input', () => {
+                    const regex = regexMap[selectedType];
+                    if (regex.test(input.value)) {
+                    errorSpan.textContent = '';
+                    } else {
+                    if(selectedType === 'text') {
+                        errorSpan.textContent = "Only alphabets and spaces allowed";
+                    } else if(selectedType === 'email') {
+                        errorSpan.textContent = "Invalid email format";
+                    } else if(selectedType === 'password') {
+                        errorSpan.textContent = "Password must be 8+ chars, 1 uppercase, 1 number";
+                    }
+                    }
+                });
+                wrapper.appendChild(input);
+                wrapper.appendChild(errorSpan);
+                inputsContainer.appendChild(wrapper);
+                });
+                form.addEventListener('submit', (e) => {
+                const inputs = inputsContainer.querySelectorAll('input');
+                for (let input of inputs) {
+                    const type = input.type;
+                    const regex = regexMap[type];
+                    if (!regex.test(input.value)) {
+                    e.preventDefault();
+                    alert(`Invalid ${type} input: "${input.value}"`);
+                    input.focus();
+                    return;
+                    }
+                }
+                alert('Form submitted successfully!');
+                });
+            </script>
+    </body>
+</html>

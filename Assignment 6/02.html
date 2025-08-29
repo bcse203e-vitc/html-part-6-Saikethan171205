@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>Email validation</title>
+    </head>
+    <body>
+        <form>
+            <label>Email:</label>
+            <input type="email" id="emailInput" required>
+            <span id="emailMsg"></span>
+        </form>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+            const emailInput = document.getElementById('email');
+            const emailMsg = document.getElementById('emailMsg');
+            const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
+            emailInput.addEventListener('blur', function () {
+                if (emailInput.value.trim() === "") {
+                emailMsg.textContent = "Email required!";
+                emailMsg.style.color = "red";
+                } else if (emailRegex.test(emailInput.value)) {
+                emailMsg.textContent = "Valid email!";
+                emailMsg.style.color = "green";
+                } else {
+                emailMsg.textContent = "Invalid email format!";
+                emailMsg.style.color = "red";
+                }
+            });
+            });
+        </script>
+    </body>
+</html>

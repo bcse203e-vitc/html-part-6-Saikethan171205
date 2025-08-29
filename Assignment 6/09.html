@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <title>Dynamic Country Dropdown</title>
+    </head>
+    <body>
+        <form>
+            <label for="continent">Continent:</label>
+            <select id="continent">
+                <option value="">Select continent</option>
+                <option value="Asia">Asia</option>
+                <option value="Europe">Europe</option>
+                <option value="Africa">Africa</option>
+                <option value="North America">North America</option>
+                <option value="South America">South America</option>
+                <option value="Oceania">Oceania</option>
+            </select>
+            <label for="country">Country:</label>
+            <select id="country">
+                <option value="">Select country</option>
+            </select>
+        </form>
+        <script>
+            const continentCountryMap = {
+            "Asia": ["India", "China", "Japan", "South Korea"],
+            "Europe": ["France", "Germany", "United Kingdom", "Italy"],
+            "Africa": ["Nigeria", "South Africa", "Egypt", "Kenya"],
+            "North America": ["United States", "Canada", "Mexico", "Cuba"],
+            "South America": ["Brazil", "Argentina", "Colombia", "Chile"],
+            "Oceania": ["Australia", "New Zealand", "Fiji", "Papua New Guinea"]
+            };
+            const continentSelect = document.getElementById('continent');
+            const countrySelect = document.getElementById('country');
+            continentSelect.addEventListener('change', function() {
+            const selectedContinent = this.value;
+            countrySelect.innerHTML = '<option value="">Select country</option>';
+            if (selectedContinent && continentCountryMap[selectedContinent]) {
+                continentCountryMap[selectedContinent].forEach(function(country) {
+                const option = document.createElement('option');
+                option.value = country;
+                option.textContent = country;
+                countrySelect.appendChild(option);
+                });
+            }
+            });
+        </script>
+    </body>
+</html>

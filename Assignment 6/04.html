@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <title>Dynamic Hobbies Form</title>
+    </head>
+    <body>
+        <form id="hobbyForm">
+            <label>Hobbies:</label>
+            <div id="hobbyContainer">
+                <input type="text" name="hobbies[]" class="hobbyInput" placeholder="Enter hobby">
+                <span class="errorMsg" style="color:red"></span><br>
+            </div>
+            <button type="button" id="addHobbyBtn">Add Hobby</button>
+        </form>
+        <script>
+            const hobbyContainer = document.getElementById('hobbyContainer');
+            const addHobbyBtn = document.getElementById('addHobbyBtn');
+            const hobbyRegex = /^[A-Za-z\s]+$/;
+            function validateHobby(input, errorSpan) {
+                if (input.value.trim() === '') {
+                    errorSpan.textContent = "";
+                    return true; 
+                }
+                if (!hobbyRegex.test(input.value)) {
+                    errorSpan.textContent = "Only alphabets and spaces allowed";
+                    return false;
+                } else {
+                    errorSpan.textContent = "";
+                    return true;
+                }
+            }
+            hobbyContainer.addEventListener('input', function(e) {
+            if (e.target && e.target.classList.contains('hobbyInput')) {
+                const errorSpan = e.target.nextElementSibling;
+                validateHobby(e.target, errorSpan);
+            }
+            });
+            addHobbyBtn.addEventListener('click', function() {
+            const newInput = document.createElement('input');
+            newInput.type = 'text';
+            newInput.name = 'hobbies[]';
+            newInput.className = 'hobbyInput';
+            newInput.placeholder = "Enter hobby";
+            const newError = document.createElement('span');
+            newError.className = 'errorMsg';
+            newError.style.color = 'red';
+            const br = document.createElement('br');
+            hobbyContainer.appendChild(newInput);
+            hobbyContainer.appendChild(newError);
+            hobbyContainer.appendChild(br);
+            });
+        </script>
+    </body>
+</html>

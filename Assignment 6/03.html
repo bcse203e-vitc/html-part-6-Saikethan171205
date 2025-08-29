@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>Dynamic Phone Number Validation</title>
+    </head>
+    <body>
+        <form>
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" placeholder="(123) 456-7890 or 123-456-7890">
+            <span id="phoneMsg"></span>
+        </form>
+        <script>
+            const phoneInput = document.getElementById('phone');
+            const phoneMsg = document.getElementById('phoneMsg');
+            const phoneRegex = /^(\(\d{3}\)\s|\d{3}-)\d{3}-\d{4}$/;
+            phoneInput.addEventListener('input', function () {
+            if (phoneRegex.test(phoneInput.value)) {
+                phoneMsg.textContent = "Valid phone number";
+                phoneMsg.style.color = "green";
+            } else {
+                phoneMsg.textContent = "Invalid phone number format";
+                phoneMsg.style.color = "red";
+            }
+            });
+        </script>
+    </body>
+</html>

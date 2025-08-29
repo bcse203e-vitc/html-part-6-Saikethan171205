@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <title>Hexadecimal Color Code Validation with Live Preview</title>
+    </head>
+    <body>
+        <form>
+            <label for="colorInput">Color Code:</label>
+            <input type="text" id="colorInput" placeholder="#FFF or #FFFFFF" maxlength="7">
+            <div id="colorPreview" style="width:40px; height:40px; display:inline-block; border:1px solid #000; vertical-align: middle;"></div>
+            <span id="errorMsg" style="color:red; margin-left: 10px;"></span>
+        </form>
+        <script>
+            const colorInput = document.getElementById('colorInput');
+            const colorPreview = document.getElementById('colorPreview');
+            const errorMsg = document.getElementById('errorMsg');
+            const colorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+            colorInput.addEventListener('input', () => {
+            const value = colorInput.value.trim();
+            if (colorRegex.test(value)) {
+                colorPreview.style.backgroundColor = value;
+                errorMsg.textContent = "";
+            } else {
+                colorPreview.style.backgroundColor = "transparent";
+                errorMsg.textContent = "Invalid hex color code!";
+            }
+            });
+        </script>
+    </body>
+</html>

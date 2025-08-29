@@ -1,0 +1,74 @@
+<html>
+  <head>
+    <title>Registration</title>
+  </head>
+  <body>
+    <form id="registrationForm">
+      <label>Name:</label>
+      <input type="text" id="name" required>
+      <span id="nameError" style="color:red"></span><br>
+      
+      <label>Email:</label>
+      <input type="email" id="email" required>
+      <span id="emailError" style="color:red"></span><br>
+      
+      <label>Password:</label>
+      <input type="password" id="password" required>
+      <span id="passwordError" style="color:red"></span><br>
+      
+      <button type="submit" id="submitBtn" disabled>Submit</button>
+    </form>
+    <script>
+      const nameField = document.getElementById('name');
+      const emailField = document.getElementById('email');
+      const passwordField = document.getElementById('password');
+      const submitBtn = document.getElementById('submitBtn');
+      function validateName() {
+        if (nameField.value.trim() === "") {
+          document.getElementById('nameError').innerText = "Name required!";
+          return false;
+        } else {
+          document.getElementById('nameError').innerText = "";
+          return true;
+        }
+      }
+      function validateEmail() {
+        const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+        if (!emailRegex.test(emailField.value)) {
+          document.getElementById('emailError').innerText = "Invalid email!";
+          return false;
+        } else {
+          document.getElementById('emailError').innerText = "";
+          return true;
+        }
+      }
+      function validatePassword() {
+        const pwdRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        if (!pwdRegex.test(passwordField.value)) {
+          document.getElementById('passwordError').innerText =
+            "Password must be 8+ chars, 1 uppercase, 1 number!";
+          return false;
+        } else {
+          document.getElementById('passwordError').innerText = "";
+          return true;
+        }
+      }
+      function validateForm() {
+        let valid = validateName() && validateEmail() && validatePassword();
+        submitBtn.disabled = !valid;
+      }
+      nameField.addEventListener('blur', validateForm);
+      emailField.addEventListener('blur', validateForm);
+      passwordField.addEventListener('blur', validateForm);
+      nameField.addEventListener('input', validateForm);
+      emailField.addEventListener('input', validateForm);
+      passwordField.addEventListener('input', validateForm);
+      document.getElementById('registrationForm').addEventListener('submit', function(e) {
+        validateForm();
+        if (submitBtn.disabled) {
+          e.preventDefault();
+        }
+      });
+    </script>
+  </body>
+</html>
